@@ -247,6 +247,7 @@ function receivedPostback(event) {
 
  if(payload=="USER_DEFINED_PAYLOAD")
   {
+
     sendTextMessage(senderID, "Welcome to Nielsen.");  
   var messageData = {
         "attachment": {
@@ -273,8 +274,14 @@ function receivedPostback(event) {
   }
   else if(payload=="Q1YES")
   {
-    sendTextMessage(senderID, "https://developers.facebook.com/docs/messenger-platform"); 
-    sendTextMessage(senderID, "Please click the link above and download the ACR app. Once the file is downloaded, click it to install to your phone and start it."); 
+     setTimeout(function () {
+          sendTextMessage(senderID, "https://developers.facebook.com/docs/messenger-platform"); 
+        }, 500);
+  
+   setTimeout(function () {
+          sendTextMessage(senderID, "Please click the link above and download the ACR app. Once the file is downloaded, click it to install to your phone and start it."); 
+        }, 1000)
+    
   
   }
   else if(payload=="Q1NO")
