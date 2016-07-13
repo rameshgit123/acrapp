@@ -274,9 +274,13 @@ function receivedPostback(event) {
   }
   else if(payload=="Q1YES")
   {
+  setTimeout(function () {
+          sendTextMessage(senderID, "Thank you!. Your ACR app User ID is : "+senderID+"" "Please enter this User ID after installation of ACR app."); 
+        }, 500)
+
      setTimeout(function () {
           sendTextMessage(senderID, "https://developers.facebook.com/docs/messenger-platform"); 
-        }, 500);
+        }, 800);
   
    setTimeout(function () {
           sendTextMessage(senderID, "Please click the link above and download the ACR app. Once the file is downloaded, click it to install to your phone and start it."); 
