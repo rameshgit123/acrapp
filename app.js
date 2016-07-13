@@ -275,7 +275,7 @@ function receivedPostback(event) {
   else if(payload=="Q1YES")
   {
   setTimeout(function () {
-          sendTextMessage(senderID, "Thank you!. Your ACR app User ID is : "+senderID+" Please enter this User ID after installation of ACR app."); 
+          sendTextMessage(senderID, "Thank you!. Your ACR app User ID is : "+senderID+" Please enter this after installation of your ACR app."); 
         }, 500);
 
      setTimeout(function () {
