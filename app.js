@@ -19,10 +19,16 @@ const
   request = require('request');
 
 var app = express();
+var sdk = require('facebook-node-sdk');
+        var fb = new sdk({
+            appId: config.get('AppId'),
+            secret: config.get('appSecret')
+        }).setAccessToken(config.get('pageAccessToken'));
 
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -247,7 +253,7 @@ function receivedPostback(event) {
 
  if(payload=="USER_DEFINED_PAYLOAD")
   {
-
+   fb.api('/' + senderID + '', function (err, data) {   
     sendTextMessage(senderID, "Welcome to Nielsen.");  
   var messageData = {
         "attachment": {
@@ -272,7 +278,7 @@ function receivedPostback(event) {
     };
       sendGenericMessage(senderID,messageData); 
 
-            fb.api('/' + senderID + '', function (err, data) {            
+                    
                      if (data) {                                      
                      assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"",recipientID);  
                      }
