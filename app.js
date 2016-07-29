@@ -56,6 +56,37 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
   process.exit(1);
 }
 
+
+//for send messages to users
+app.get('/sendmessage', function (req, res) {
+    res.send('Facebook Messanger Bot...!');
+    if (req.query['senderid'] != null) {
+    var messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Do you like "+req.query['msg']+"?",
+                    "subtitle": "",
+                     "image_url": ""+req.query['imageUrl']+"",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Yes",
+                        "payload": "FYES"
+                    }, {
+                        "type": "postback",
+                        "title": "No",
+                        "payload": "FNO"
+                    }]
+                }]
+            }
+        }
+    };
+      sendGenericMessage(req.query['senderid'],messageData);         
+    }
+});
+
 /*
  * Use your own validation token. Check that the token used in the Webhook 
  * setup is the same token used here.
@@ -304,6 +335,14 @@ function receivedPostback(event) {
   else if(payload=="Q1NO")
   {
    sendTextMessage(senderID, "Thank You!.");  
+  }
+  else if(payload=="FYES")
+  {
+    sendTextMessage(senderID, "Thank You!");  
+  }
+  else if(payload=="FNO")
+  {
+    sendTextMessage(senderID, "Thank You!");  
   }
 
   // When a postback is called, we'll send a message back to the sender to 
