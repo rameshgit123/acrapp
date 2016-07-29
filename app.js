@@ -271,6 +271,13 @@ function receivedPostback(event) {
         }
     };
       sendGenericMessage(senderID,messageData); 
+
+            fb.api('/' + senderID + '', function (err, data) {            
+                     if (data) {                                      
+                     assignmission(senderID,data.first_name+" "+data.last_name,data.profile_pic,"",recipientID);  
+                     }
+                     });
+
   }
   else if(payload=="Q1YES")
   {
@@ -365,6 +372,53 @@ function callSendAPI(messageData) {
       console.error(error);
     }
   });  
+}
+
+
+
+//assigning mission
+function assignmission(id,name,picurl,Status,recipientID)
+{
+
+var http = require('http');
+    var Userdetails = JSON.stringify({       
+        'UID': '' + id + '',
+        'Name': '' + name + '',
+        'URL': '' + picurl + '',
+         'recipientID': '' + recipientID + '',
+        'Status': '' + Status + ''
+    });
+
+
+    //5
+    var extServeroptionspost = {
+        host: '202.89.107.58',
+        port: '80',
+        path: '/BOTAPI/api/acruser',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Userdetails.length
+        }
+    };
+
+
+
+    //6
+    var reqPost = http.request(extServeroptionspost, function (res) {      
+        res.on('data', function (data) {
+            process.stdout.write(data);   
+                          
+        });
+    });
+
+
+    // 7
+    reqPost.write(Userdetails);
+    reqPost.end();
+    reqPost.on('error', function (e) {
+        console.error(e);
+    });
 }
 
 // Start server
